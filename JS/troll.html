@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Do You Love Me</title>
+    <style>
+        body {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #btnNo {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<h1>Do you love me?</h1>
+<button onclick="alert('I LOVE YOU TOO')">YES</button>
+<button id="btnNo" onmouseover="moveButton()">NO</button>
+
+<script>
+    function moveButton() {
+        const btn = document.getElementById('btnNo');
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        btn.style.left = randomX + 'px';
+        btn.style.top = randomY + 'px';
+
+        console.log("Window height:", window.innerHeight);
+    }
+</script>
+</body>
+</html>
