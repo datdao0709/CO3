@@ -1,0 +1,406 @@
+/* Màu sắc nền: Định nghĩa màu nền cho các phần tử như body, bàn cờ, viền, và modal */
+.bg-default {
+    background-color: #fef9f1;
+}
+
+.board-bg {
+    background-color: #999;
+}
+
+.border-default {
+    border-color: #444;
+}
+
+.modal-bg {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Màu sắc ký tự và hiệu ứng: Đặt màu cho ký tự X, O, trạng thái thắng, và các hiệu ứng bóng */
+.x-color {
+    color: #ff6347;
+}
+
+.o-color {
+    color: #1e90ff;
+}
+
+.win-color {
+    background-color: #fff3b0;
+}
+
+.win-shadow {
+    box-shadow: 0 0 10px 3px rgba(255, 196, 0, 0.7);
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Màu sắc nút: Định nghĩa màu nền cho các nút, bao gồm nút thường, nút nhạc, và trạng thái hover */
+.button-bg {
+    background-color: #3498db;
+}
+
+.button-hover {
+    background-color: #2980b9;
+}
+
+.music-on {
+    background-color: #ff6b6b;
+}
+
+.music-off {
+    background-color: #2ecc71;
+}
+
+.music-on-hover {
+    background-color: #c0392b;
+}
+
+.music-off-hover {
+    background-color: #27ae60;
+}
+
+/* Kích thước: Xác định kích thước ô cờ cho màn hình lớn và nhỏ */
+.cell-size {
+    width: 40px;
+    height: 40px;
+}
+
+.cell-size-small {
+    width: 18px;
+    height: 18px;
+}
+
+/* Reset và style cơ bản: Reset margin, padding, đặt font chữ mặc định, và định dạng body với nền hình ảnh, bố cục flex */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: url("https://i.pinimg.com/736x/74/63/a5/7463a550558ae36baffe413dc7811b7b.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+    position: relative;
+}
+
+body.win-overlay::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.7);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+h1 {
+    font-size: 36px;
+    color: #fffae5;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+label {
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+select {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* Bàn cờ */
+#board {
+    display: grid;
+    grid-template-columns: repeat(15, 40px);
+    grid-template-rows: repeat(15, 40px);
+    gap: 1px;
+    background-color: #999;
+    padding: 10px;
+    border: 3px solid #444;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+}
+
+/* Ô cờ */
+.cell {
+    width: 40px;
+    height: 40px;
+    background-color: #fef9f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.cell:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.05);
+}
+
+.cell:active {
+    background-color: #e0e0e0;
+}
+
+.cell.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.cell.x-color {
+    color: #ff6347;
+}
+
+.cell.o-color {
+    color: #1e90ff;
+}
+
+.cell.win-color {
+    background-color: #fff3b0;
+    color: #d62828;
+    animation: blinkWin 1s infinite alternate;
+    box-shadow: 0 0 10px 3px rgba(255, 196, 0, 0.7);
+}
+
+/* Trạng thái */
+#status {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    transition: color 0.3s;
+}
+
+#status.x-color {
+    color: #ff6347;
+}
+
+#status.o-color {
+    color: #1e90ff;
+}
+
+#status.win-color {
+    color: #249328;
+}
+
+#status.draw,
+#status.timeout {
+    color: #f4a261;
+}
+
+/* Bộ đếm thời gian */
+#timerContainer {
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 10px;
+}
+
+#timer {
+    color: #ff6347;
+}
+
+/* Container nút */
+.button-container {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+/* Nút chung */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    z-index: 1100;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Nút nhạc */
+.music-on:hover {
+    background-color: #c0392b;
+}
+
+.music-off:hover {
+    background-color: #27ae60;
+}
+
+/* Modal */
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+#modal.hidden {
+    display: none;
+}
+
+#modal > div {
+    background-color: #fef9f1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+#modal p {
+    font-size: 19px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#modal button {
+    margin: 0 10px;
+}
+
+/* Hiệu ứng nhấp nháy ô thắng */
+@keyframes blinkWin {
+    from {
+        background-color: #fff3b0;
+    }
+    to {
+        background-color: #fff;
+    }
+}
+
+/* Responsive cho Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #board {
+        grid-template-columns: repeat(15, 30px);
+        grid-template-rows: repeat(15, 30px);
+    }
+
+    .cell {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 10px 16px;
+        max-width: 200px;
+    }
+
+    .button-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    select {
+        font-size: 16px;
+        width: 100%;
+    }
+
+    label,
+    #timerContainer,
+    #status {
+        font-size: 18px;
+    }
+}
+
+
+/* Responsive cho Mobile*/
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    #board {
+        grid-template-columns: repeat(15, 18px);
+        grid-template-rows: repeat(15, 18px);
+        padding: 5px;
+    }
+
+    .cell {
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+    }
+
+    label,
+    #timerContainer,
+    #status {
+        font-size: 14px;
+    }
+
+    select {
+        font-size: 14px;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 12px;
+        width: 90%;
+        max-width: 200px;
+    }
+}

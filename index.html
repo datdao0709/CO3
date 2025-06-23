@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cờ Caro</title>
+    <link rel="icon" type="image/x-icon" href="logo.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-default">
+<h1 class="text-shadow">Cờ Caro</h1>
+<div class="controls text-shadow">
+    <label for="modeSelect" class="text-shadow">Chế độ chơi:</label>
+    <select id="modeSelect">
+        <option value="pvp">Người vs Người</option>
+        <option value="pve">Người vs Máy</option>
+    </select>
+</div>
+<div id="status" class="text-shadow">Đến lượt: X</div>
+<div id="timerContainer" class="text-shadow">⏳ Thời gian: <span id="timer" class="x-color">20</span> giây</div>
+<div id="board" class="board-bg border-default">
+</div>
+<div class="button-container">
+    <button id="restartMainButton" class="button-bg">Chơi lại</button>
+    <button id="toggleMusic" class="music-off">Bật nhạc</button>
+</div>
+<div id="modal" class="modal-bg">
+    <div class="modal-content bg-default">
+        <p id="modalMessage"></p>
+        <button id="restartModalButton" class="button-bg">Chơi lại</button>
+        <button id="closeModalButton" class="button-bg">Đóng</button>
+    </div>
+</div>
+<audio id="backgroundMusic" loop preload="auto" muted>
+    <source src="sounds/music_zapsplat_astro_race.mp3" type="audio/mpeg">
+</audio>
+<audio id="sound-win" src="sounds/mixkit-video-game-win-2016.wav" preload="auto"></audio>
+<audio id="sound-lose" src="sounds/mixkit-player-losing-or-failing-2042.wav" preload="auto"></audio>
+<audio id="sound-draw" src="sounds/mixkit-completion-of-a-level-2063.wav" preload="auto"></audio>
+
+</body>
+<script src="main.js"></script>
+</html>
