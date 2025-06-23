@@ -315,46 +315,6 @@ button:hover {
     }
 }
 
-/* Responsive cho Tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
-    #board {
-        grid-template-columns: repeat(15, 30px);
-        grid-template-rows: repeat(15, 30px);
-    }
-
-    .cell {
-        width: 30px;
-        height: 30px;
-        font-size: 18px;
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-
-    button {
-        font-size: 15px;
-        padding: 10px 16px;
-        max-width: 200px;
-    }
-
-    .button-container {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    select {
-        font-size: 16px;
-        width: 100%;
-    }
-
-    label,
-    #timerContainer,
-    #status {
-        font-size: 18px;
-    }
-}
-
 
 /* Responsive cho Mobile*/
 @media (max-width: 768px) {
