@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Vẽ hình tròn</title>
+</head>
+<body>
+
+<h2>Vẽ hình tròn bằng JavaScript</h2>
+
+<canvas id="canvas" width="400" height="400" style="border:1px solid black;"></canvas>
+
+<script>
+    // Định nghĩa lớp Circle
+    class Circle {
+        constructor(radius, color) {
+            this.radius = radius;
+            this.color = color;
+        }
+
+        // Tính diện tích hình tròn
+        getArea() {
+            return Math.PI * this.radius * this.radius;
+        }
+
+        // Vẽ hình tròn lên canvas
+        draw(canvasId, centerX, centerY) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, this.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.stroke(); // Viền hình tròn
+
+            // In thông tin ra bên dưới canvas
+            document.write(`<p>Bán kính: ${this.radius}</p>`);
+            document.write(`<p>Màu sắc: ${this.color}</p>`);
+            document.write(`<p>Diện tích: ${this.getArea().toFixed(2)}</p>`);
+        }
+    }
+
+    // Tạo một hình tròn
+    const circle = new Circle(80, "blue");
+    circle.draw("canvas", 200, 200);
+</script>
+
+</body>
+</html>

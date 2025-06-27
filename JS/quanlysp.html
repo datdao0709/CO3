@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+    <style>
+        body {
+            font-family: "Times New Roman", sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-product {
+            margin-bottom: 20px;
+        }
+
+        .add-product input {
+            padding: 5px;
+            width: 70%;
+        }
+
+        .add-product button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100px;
+            height: 50px;
+            margin-left: 5px;
+            padding: 5px;
+        }
+
+        .product-list {
+            margin-top: 20px;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .product-header span {
+            color: red;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100px;
+            height: 50px;
+        }
+        #name{
+            width: 400px;
+            height: 30px;
+            font-size: 15px;
+        }
+        #edit{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="add-product">
+        <h2>Add New Product</h2>
+        <input type="text" id="name" placeholder="New Product">
+        <button onclick="addSP()">Add</button>
+        <h3>Display Product</h3>
+    </div>
+
+    <div class="product-list">
+        <div class="product-header">
+            <h4>Product Name</h4>
+            <span id="sl">7 products</span>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="list">
+            </tbody>
+        </table>
+    </div>
+    <div id="edit"></div>
+</div>
+
+<script>
+    let listProDuct = [
+        'Sony Xperia',
+        'Samsung Galaxy',
+        'Nokia 6',
+        'Xiaomi Redmi Note 4',
+        'Apple iPhone 6S',
+        'Xiaomi Mi 5s Plus',
+        'Apple iPhone 8 Plus'
+    ];
+
+    function hienThi() {
+        let str = '';
+        for (let i = 0; i < listProDuct.length; i++) {
+            str += `
+                    <tr>
+                        <td>${listProDuct[i]}</td>
+                        <td><button onclick="editSP(${i})">Edit</button></td>
+                        <td><button onclick="deleteSP(${i})">Delete</button></td>
+                    </tr>`;
+        }
+        document.getElementById('list').innerHTML = str;
+        document.getElementById('sl').innerHTML = listProDuct.length + ' products';
+    }
+
+    function addSP() {
+        let newName = document.getElementById('name').value.trim();
+        if (newName !== '') {
+            listProDuct.push(newName);
+            document.getElementById('name').value = '';
+            hienThi();
+        } else {
+            alert('Vui lòng nhập tên sản phẩm!');
+        }
+    }
+
+    function deleteSP(index) {
+        if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+            listProDuct.splice(index, 1);
+            document.getElementById('edit').innerHTML = '';
+            hienThi();
+        }
+    }
+
+    function editSP(index) {
+        document.getElementById('edit').innerHTML = `
+                <input type="text" id="editName" value="${listProDuct[index]}" placeholder="Sửa tên sản phẩm">
+                <button onclick="saveSP(${index})">Save</button>
+                <button onclick="deleteSP(${index})">Delete</button>
+            `;
+    }
+
+    function saveSP(index) {
+        let newName = document.getElementById('editName').value.trim();
+        if (newName !== '') {
+            listProDuct[index] = newName;
+            document.getElementById('edit').innerHTML = '';
+            hienThi();
+        } else {
+            alert('Tên sản phẩm không được để trống!');
+        }
+    }
+
+    hienThi();
+
+</script>
+</body>
+</html>

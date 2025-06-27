@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // function squareNumber(num) {
+    //     return num * num;
+    // }
+    //
+    // // Kiểm tra hàm
+    // alert(squareNumber(5));
+    // alert(squareNumber(3));
+    // alert(squareNumber(0));
+
+
+    // Hàm tính diện tích hình tròn
+    // function tinhS(banKinh) {
+    //     return 3.14 * banKinh * banKinh; // Diện tích = π * r * r
+    // }
+    //
+    // // Hàm tính chu vi hình tròn
+    // function tinhV(banKinh) {
+    //     return 2 * 3.14 * banKinh; // Chu vi = 2 * π * r
+    // }
+    //
+    // // Kiểm tra
+    // document.write("Diện tích (bán kính 5):", tinhS(5));
+    // document.write("Chu vi (bán kính 5):", tinhV(5));
+
+
+    // function min(a, b, c) {
+    //     let min = a;
+    //     if (b < min) {
+    //         min = b;
+    //         if (c < min) {
+    //             min = c;
+    //         }
+    //         return min;
+    //     }
+    // }
+    //
+    // document.write(min(5, 3, 1));
+
+    // function swap(a, b) {
+    //     let temp = a;
+    //     a = b;
+    //     b = temp;
+    //     document.write(a, b);
+    //
+    // }
+    // swap(5, 3);
+
+
+    // function isPositiveInteger(n) {
+    //     return Number.isInteger(n) && n > 0;
+    // }
+    // document.write(isPositiveInteger(-1));
+
+    function daoMang(arr) {
+        let newArr = [];
+        for (let i = arr.length - 1; i >= 0; i--) {
+            newArr.push(arr[i]);
+        }
+        return newArr;
+    }
+
+    let arr = [1, 2, 3, 4, 5];
+    document.write(daoMang(arr));
+</script>
+</body>
+</html>

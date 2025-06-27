@@ -1,78 +1,4 @@
-/* Màu sắc nền: Định nghĩa màu nền cho các phần tử như body, bàn cờ, viền, và modal */
-.bg-default {
-    background-color: #fef9f1;
-}
-
-.board-bg {
-    background-color: #999;
-}
-
-.border-default {
-    border-color: #444;
-}
-
-.modal-bg {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Màu sắc ký tự và hiệu ứng: Đặt màu cho ký tự X, O, trạng thái thắng, và các hiệu ứng bóng */
-.x-color {
-    color: #ff6347;
-}
-
-.o-color {
-    color: #1e90ff;
-}
-
-.win-color {
-    background-color: #fff3b0;
-}
-
-.win-shadow {
-    box-shadow: 0 0 10px 3px rgba(255, 196, 0, 0.7);
-}
-
-.text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-/* Màu sắc nút: Định nghĩa màu nền cho các nút, bao gồm nút thường, nút nhạc, và trạng thái hover */
-.button-bg {
-    background-color: #3498db;
-}
-
-.button-hover {
-    background-color: #2980b9;
-}
-
-.music-on {
-    background-color: #ff6b6b;
-}
-
-.music-off {
-    background-color: #2ecc71;
-}
-
-.music-on-hover {
-    background-color: #c0392b;
-}
-
-.music-off-hover {
-    background-color: #27ae60;
-}
-
-/* Kích thước: Xác định kích thước ô cờ cho màn hình lớn và nhỏ */
-.cell-size {
-    width: 40px;
-    height: 40px;
-}
-
-.cell-size-small {
-    width: 18px;
-    height: 18px;
-}
-
-/* Reset và style cơ bản: Reset margin, padding, đặt font chữ mặc định, và định dạng body với nền hình ảnh, bố cục flex */
+/* === RESET & GLOBAL === */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -81,87 +7,163 @@
 }
 
 body {
-    background: url("https://i.pinimg.com/736x/74/63/a5/7463a550558ae36baffe413dc7811b7b.jpg") no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
-    padding: 10px;
-    position: relative;
+    padding: 20px;
+    overflow: auto;
+    background: url("image/backgroundgame.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #ccc;
 }
 
 body.win-overlay::after {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(20, 20, 20, 0.7);
+    inset: 0;
+    background: rgba(20, 3, 0, 0.7);
     z-index: 1000;
     pointer-events: none;
 }
 
-h1 {
-    font-size: 36px;
-    color: #fffae5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    margin-bottom: 10px;
-    text-align: center;
+body.modal-open .player-input-buttons {
+    display: none;
 }
 
-.controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
+h1 {
+    font-size: 32px;
+    color: #fffae5;
+    text-align: center;
     margin-bottom: 10px;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+h1 i, label i, .player-input-buttons button i, select option i, button i, #modal p i {
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 label {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* === COMPONENT CONTAINERS === */
+.player-input-container,
+.player-input-fields,
+.player-input-buttons,
+.scores,
+.controls,
+.button-container,
+#modal-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 10px;
+}
+
+.controls, .scores {
+    max-width: 600px;
+}
+
+/* === INPUT & SELECT === */
+.player-name-input, select {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    font-size: 18px;
+    max-width: 220px;
+    width: 100%;
+}
+
+.player-name-input::placeholder {
+    color: #333;
+    font-size: 18px;
+}
+
+/* === STATUS & TIMER === */
+#status, #timerContainer {
     font-size: 20px;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    color: #fff;
+    margin: 4px 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-select {
-    padding: 5px 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #fff;
-    cursor: pointer;
+#status.x-color {
+    color: #ff6347;
 }
 
-/* Bàn cờ */
+#status.o-color {
+    color: #1e90ff;
+}
+
+#status.win-color {
+    color: #249328;
+    background: transparent;
+}
+
+#status.draw, #status.timeout {
+    color: #f4a261;
+    background: transparent;
+}
+
+#timer {
+    color: #ff6347;
+}
+
+/* === SCORE === */
+.score-x, .score-o, #nameX, #nameO, #scoreX, #scoreO {
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.score-x {
+    color: #ff6347;
+}
+
+.score-o {
+    color: #1e90ff;
+}
+
+/* === BOARD === */
 #board {
     display: grid;
-    grid-template-columns: repeat(15, 40px);
-    grid-template-rows: repeat(15, 40px);
+    grid-template-columns: repeat(15, 35px);
+    grid-template-rows: repeat(15, 35px);
     gap: 1px;
+    padding: 5px;
     background-color: #999;
-    padding: 10px;
-    border: 3px solid #444;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 100%;
+    border: 2px solid #444;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
 }
 
-/* Ô cờ */
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background-color: #fef9f1;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    color: #333;
 }
 
 .cell:hover {
@@ -174,8 +176,8 @@ select {
 }
 
 .cell.disabled {
-    cursor: not-allowed;
     pointer-events: none;
+    cursor: not-allowed;
 }
 
 .cell.x-color {
@@ -190,91 +192,17 @@ select {
     background-color: #fff3b0;
     color: #d62828;
     animation: blinkWin 1s infinite alternate;
-    box-shadow: 0 0 10px 3px rgba(255, 196, 0, 0.7);
+    box-shadow: 0 0 10px 3px rgba(255, 196, 0, 0.8);
 }
 
-/* Trạng thái */
-#status {
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-    margin: 10px 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    transition: color 0.3s;
-}
-
-#status.x-color {
-    color: #ff6347;
-}
-
-#status.o-color {
-    color: #1e90ff;
-}
-
-#status.win-color {
-    color: #249328;
-}
-
-#status.draw,
-#status.timeout {
-    color: #f4a261;
-}
-
-/* Bộ đếm thời gian */
-#timerContainer {
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    margin-bottom: 10px;
-}
-
-#timer {
-    color: #ff6347;
-}
-
-/* Container nút */
-.button-container {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-}
-
-/* Nút chung */
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    z-index: 1100;
-}
-
-button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-/* Nút nhạc */
-.music-on:hover {
-    background-color: #c0392b;
-}
-
-.music-off:hover {
-    background-color: #27ae60;
-}
-
-/* Modal */
+/* === MODAL === */
 #modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -287,25 +215,65 @@ button:hover {
 
 #modal > div {
     background-color: #fef9f1;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 15px;
+    border-radius: 8px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 #modal p {
-    font-size: 19px;
-    margin-bottom: 20px;
+    font-size: 20px;
+    margin-bottom: 15px;
     color: #333;
 }
 
-#modal button {
-    margin: 0 10px;
+/* === BUTTONS === */
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    z-index: 1100;
+    width: 100%;
+    max-width: 180px;
 }
 
-/* Hiệu ứng nhấp nháy ô thắng */
+button:hover {
+    background-color: #2980b9;
+}
+
+button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+
+.music-on {
+    background-color: #ff6b6b;
+}
+
+.music-off {
+    background-color: #2ecc71;
+}
+
+.music-on:hover {
+    background-color: #ff4040;
+}
+
+.music-off:hover {
+    background-color: #27ae60;
+}
+
+
+/* === ANIMATION === */
 @keyframes blinkWin {
     from {
         background-color: #fff3b0;
@@ -315,52 +283,101 @@ button:hover {
     }
 }
 
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+    #board {
+        grid-template-columns: repeat(15, 28px);
+        grid-template-rows: repeat(15, 28px);
+    }
 
-/* Responsive cho Mobile*/
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
+    .cell {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+
+    .player-name-input, select, button {
         font-size: 14px;
+        max-width: 180px;
+        padding: 6px;
+    }
+
+    .player-name-input::placeholder {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    #status, #timerContainer, .score-x, .score-o, label {
+        font-size: 16px;
+    }
+
+    #modal > div {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    #modal p {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .player-input-container,
+    .player-input-fields,
+    .player-input-buttons,
+    .scores,
+    .controls,
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    select {
+        font-size: 13px;
+        min-width: 140px;
+        max-width: 90%;
+        padding: 6px;
+    }
+
+    #board {
+        grid-template-columns: repeat(15, 22px);
+        grid-template-rows: repeat(15, 22px);
+    }
+
+    .cell {
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+    }
+
+    .player-name-input, select, button {
+        font-size: 12px;
+        max-width: 90%;
+        padding: 5px;
     }
 
     h1 {
         font-size: 24px;
     }
 
-    #board {
-        grid-template-columns: repeat(15, 18px);
-        grid-template-rows: repeat(15, 18px);
-        padding: 5px;
-    }
-
-    .cell {
-        width: 18px;
-        height: 18px;
-        font-size: 12px;
-    }
-
-    label,
-    #timerContainer,
-    #status {
+    #status, #timerContainer, .score-x, .score-o, label {
         font-size: 14px;
     }
 
-    select {
-        font-size: 14px;
-        width: 100%;
-        margin-top: 5px;
+    #modal > div {
+        max-width: 250px;
+        padding: 10px;
     }
 
-    .button-container {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
+    #modal p {
+        font-size: 16px;
     }
 
-    button {
-        font-size: 14px;
-        padding: 8px 12px;
-        width: 90%;
-        max-width: 200px;
+    #modal-buttons button {
+        width: 80px;
     }
 }

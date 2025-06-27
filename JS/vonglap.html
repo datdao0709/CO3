@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2></h2>
+<p id="demo"></p>
+<script>
+    function tinhTongChuSo_Cach1(n) {
+        let tong = 0;
+        let soTam = Math.abs(n); // Xử lý trường hợp số âm bằng cách lấy giá trị tuyệt đối
+
+        while (soTam > 0) {
+            tong += soTam % 10;
+            soTam = Math.floor(soTam / 10);
+        }
+        return tong;
+    }
+
+    // Ví dụ:
+    document.getElementById("demo").innerHTML = tinhTongChuSo_Cach1(12345);
+</script>
+
+</body>
+</html>

@@ -4,40 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cờ Caro</title>
-    <link rel="icon" type="image/x-icon" href="logo.jpg">
+    <link rel="icon" type="image/x-icon" href="image/logo.jpg">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="themify-icons-font/themify-icons/themify-icons.css">
 </head>
 <body class="bg-default">
-<h1 class="text-shadow">Cờ Caro</h1>
+<h1 class="text-shadow"><i class="ti-layout-grid2"></i> Cờ Caro</h1>
+
+<!-- KHU VỰC NHẬP TÊN NGƯỜI CHƠI VÀ ĐIỀU KHIỂN -->
+<div id="playerNames" class="player-input-container">
+    <div class="player-input-fields">
+        <label for="playerX"><i class="ti-user"></i></label>
+        <input type="text" class="player-name-input" id="playerX" autocomplete="off" placeholder="Tên người chơi X">
+        <label for="playerO"><i class="ti-user"></i></label>
+        <input type="text" class="player-name-input" id="playerO" autocomplete="off" placeholder="Tên người chơi O">
+    </div>
+    <div class="player-input-buttons">
+        <button id="savePlayersButton"><i class="ti-save"></i> Lưu tên</button>
+        <button id="resetHistoryButton"><i class="ti-reload"></i> Reset</button>
+    </div>
+</div>
+
+<!-- KHU VỰC HIỂN THỊ ĐIỂM SỐ NGƯỜI CHƠI -->
+<div class="scores" id="scoreContainer">
+    <div style="display: none;">
+        <span><strong id="nameX"></strong>: <span id="scoreX">0</span></span>
+        <span><strong id="nameO"></strong>: <span id="scoreO">0</span></span>
+    </div>
+</div>
+
+
+<!-- KHU CHỌN CHẾ ĐỘ CHƠI -->
 <div class="controls text-shadow">
-    <label for="modeSelect" class="text-shadow">Chế độ chơi:</label>
-    <select id="modeSelect">
-        <option value="pvp">Người vs Người</option>
-        <option value="pve">Người vs Máy</option>
-    </select>
+    <div class="control-label">
+        <label for="modeSelect" class="text-shadow"><i class="ti-game"></i> Chế độ chơi:</label>
+    </div>
+    <div class="control-select">
+        <select id="modeSelect">
+            <option value="pvp">👥 Người vs Người</option>
+            <option value="pve">🤖 Người vs Máy</option>
+        </select>
+    </div>
 </div>
-<div id="status" class="text-shadow">Đến lượt: X</div>
-<div id="timerContainer" class="text-shadow">⏳ Thời gian: <span id="timer" class="x-color">20</span> giây</div>
-<div id="board" class="board-bg border-default">
+
+<div id="status" class="win-color">Đến lượt: X</div>
+
+<div id="timerContainer" class="text-shadow">
+    <i class="ti-time"></i> Thời gian còn lại: <span id="timer" class="x-color">30</span> giây
 </div>
+
+<!-- BẢNG CỜ -->
+<div id="board" class="board-bg border-default"></div>
+
+<!-- NÚT ĐIỀU KHIỂN CHÍNH -->
 <div class="button-container">
-    <button id="restartMainButton" class="button-bg">Chơi lại</button>
-    <button id="toggleMusic" class="music-off">Bật nhạc</button>
+    <button id="restartMainButton" class="button-bg"><i class="ti-reload"></i> Chơi lại</button>
+    <button id="toggleMusic" class="music-off"><i class="ti-control-play"></i> Bật nhạc</button>
 </div>
+
+<!-- HỘP THOẠI MODAL KHI CÓ KẾT QUẢ -->
 <div id="modal" class="modal-bg">
     <div class="modal-content bg-default">
         <p id="modalMessage"></p>
-        <button id="restartModalButton" class="button-bg">Chơi lại</button>
-        <button id="closeModalButton" class="button-bg">Đóng</button>
+        <div id="modal-buttons">
+            <button id="restartModalButton" class="button-bg"><i class="ti-reload"></i> Chơi lại</button>
+            <button id="closeModalButton" class="button-bg"><i class="ti-close"></i> Đóng</button>
+        </div>
     </div>
 </div>
+
+<!-- NHẠC NỀN VÀ ÂM THANH HIỆU ỨNG -->
 <audio id="backgroundMusic" loop preload="auto" muted>
     <source src="sounds/music_zapsplat_astro_race.mp3" type="audio/mpeg">
 </audio>
 <audio id="sound-win" src="sounds/mixkit-video-game-win-2016.wav" preload="auto"></audio>
 <audio id="sound-lose" src="sounds/mixkit-player-losing-or-failing-2042.wav" preload="auto"></audio>
 <audio id="sound-draw" src="sounds/mixkit-completion-of-a-level-2063.wav" preload="auto"></audio>
-
-</body>
 <script src="main.js"></script>
+</body>
 </html>
