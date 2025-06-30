@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2 - So sánh phân số</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+
+        #ketQua {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<h2>So Sánh Hai Phân Số</h2>
+
+<div class="input-group">
+    Phân số 1:
+    <input type="number" id="tu1" value="1" step="1" required> /
+    <input type="number" id="mau1" value="2" step="1" required>
+</div>
+
+<div class="input-group">
+    Phân số 2:
+    <input type="number" id="tu2" value="2" step="1" required> /
+    <input type="number" id="mau2" value="4" step="1" required>
+</div>
+
+<div class="input-group">
+    <button onclick="kiemTraPhanSo()">Kiểm Tra</button>
+</div>
+
+<div id="ketQua"></div>
+
+<script>
+    // Hàm lấy giá trị và kiểm tra hợp lệ
+    function layGiaTri(id) {
+        const phanTu = document.getElementById(id);
+        const giaTri = parseInt(phanTu.value);
+        if (isNaN(giaTri)) throw new Error(`Giá trị của "${id}" không hợp lệ!`);
+        return giaTri;
+    }
+
+    // Hàm kiểm tra mẫu số khác 0
+    function kiemTraMauSo(m1, m2) {
+        if (m1 === 0 || m2 === 0) {
+            throw new Error("Mẫu số không được bằng 0!");
+        }
+    }
+
+    // Hàm so sánh hai phân số bằng nhân chéo
+    function soSanhPhanSo(t1, m1, t2, m2) {
+        return t1 * m2 === t2 * m1;
+    }
+
+    // Hàm xử lý chính
+    function kiemTraPhanSo() {
+        const divKetQua = document.getElementById('ketQua');
+        divKetQua.className = '';
+
+        try {
+            const tu1 = layGiaTri('tu1');
+            const mau1 = layGiaTri('mau1');
+            const tu2 = layGiaTri('tu2');
+            const mau2 = layGiaTri('mau2');
+
+            kiemTraMauSo(mau1, mau2);
+
+            const ketQua = soSanhPhanSo(tu1, mau1, tu2, mau2);
+            divKetQua.innerText = `Kết quả: ${ketQua ? 'Đúng (bằng nhau)' : 'Sai (khác nhau)'}`;
+        } catch (err) {
+            divKetQua.innerText = err.message;
+        }
+    }
+</script>
+</body>
+</html>

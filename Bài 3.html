@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 3 - Quan Ly So Tiet Kiem</title>
+    <style>
+        body {
+            font-family: Arial, serif;
+            padding: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th {
+            background: #f2f2f2;
+        }
+
+        input, button {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .error {
+            color: red;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<h2>Quản Lý Sổ Tiết Kiệm</h2>
+
+<div>
+    <input type="text" id="maSo" placeholder="Mã sổ" maxlength="5">
+    <input type="text" id="loaiTietKiem" placeholder="Loại tiết kiệm" maxlength="10">
+    <input type="text" id="hoTen" placeholder="Họ tên" maxlength="30">
+    <input type="number" id="cccd" placeholder="CCCD">
+    <input type="text" id="ngayMoSo" placeholder="Ngày mở (dd/mm/yyyy)">
+    <input type="number" id="soTienGui" placeholder="Số tiền gửi">
+    <button onclick="themSoTietKiem()">Thêm</button>
+    <br>
+    <input type="text" id="maSoXoa" placeholder="Nhập mã sổ cần xóa">
+    <button onclick="xoaSoTietKiem()">Xóa</button>
+    <div id="thongBao" class="error"></div>
+</div>
+
+<table id="bangSoTietKiem">
+    <tr>
+        <th>Mã Sổ</th>
+        <th>Loại</th>
+        <th>Họ Tên</th>
+        <th>CCCD</th>
+        <th>Ngày Mở</th>
+        <th>Số Tiền</th>
+    </tr>
+</table>
+
+<script>
+    class SoTietKiem {
+        constructor(maSo, loai, hoTen, cccd, ngayMo, soTien) {
+            this.maSo = maSo;
+            this.loai = loai;
+            this.hoTen = hoTen;
+            this.cccd = cccd;
+            this.ngayMo = ngayMo;
+            this.soTien = soTien;
+        }
+    }
+
+    const danhSachSo = [];
+
+    function kiemTraNgayHopLe(chuoiNgay) {
+        const dinhDang = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+        if (!dinhDang.test(chuoiNgay)) return false;
+        const [ngayStr, thangStr, namStr] = chuoiNgay.split('/');
+        const ngay = parseInt(ngayStr);
+        const thang = parseInt(thangStr);
+        const nam = parseInt(namStr);
+        const doiTuongNgay = new Date(nam, thang - 1, ngay);
+        return (
+            doiTuongNgay.getDate() === ngay &&
+            doiTuongNgay.getMonth() === thang - 1 &&
+            doiTuongNgay.getFullYear() === nam
+        );
+    }
+
+    function themSoTietKiem() {
+        const maSo = document.getElementById("maSo").value.trim();
+        const loai = document.getElementById("loaiTietKiem").value.trim();
+        const hoTen = document.getElementById("hoTen").value.trim();
+        const cccd = document.getElementById("cccd").value.trim();
+        const ngayMo = document.getElementById("ngayMoSo").value.trim();
+        const soTien = document.getElementById("soTienGui").value.trim();
+        const thongBao = document.getElementById("thongBao");
+
+        thongBao.className = "error";
+
+        if (!maSo || !loai || !hoTen || !cccd || !ngayMo || !soTien) {
+            thongBao.innerText = "Không được để trống!";
+            return;
+        }
+
+        if (maSo.length > 5 || loai.length > 10 || hoTen.length > 30) {
+            thongBao.innerText = "Kiểm tra độ dài các trường!";
+            return;
+        }
+
+        if (isNaN(cccd) || isNaN(soTien) || Number(soTien) <= 0) {
+            thongBao.innerText = "CCCD và số tiền phải là số dương!";
+            return;
+        }
+
+        if (!kiemTraNgayHopLe(ngayMo)) {
+            thongBao.innerText = "Ngày mở sai định dạng!";
+            return;
+        }
+
+        if (danhSachSo.some(s => s.maSo === maSo)) {
+            thongBao.innerText = "Mã sổ đã tồn tại!";
+            return;
+        }
+
+        const so = new SoTietKiem(maSo, loai, hoTen, cccd, ngayMo, Number(soTien));
+        danhSachSo.push(so);
+        thongBao.innerText = "Thêm thành công!";
+        thongBao.className = "success";
+        capNhatBangSo();
+    }
+
+    function capNhatBangSo() {
+        const bang = document.getElementById("bangSoTietKiem");
+        bang.innerHTML = `
+            <tr>
+                <th>Mã Sổ</th>
+                <th>Loại</th>
+                <th>Họ Tên</th>
+                <th>CCCD</th>
+                <th>Ngày Mở</th>
+                <th>Số Tiền</th>
+            </tr>`;
+        danhSachSo.forEach(s => {
+            const hang = bang.insertRow();
+            hang.insertCell().innerText = s.maSo;
+            hang.insertCell().innerText = s.loai;
+            hang.insertCell().innerText = s.hoTen;
+            hang.insertCell().innerText = s.cccd;
+            hang.insertCell().innerText = s.ngayMo;
+            hang.insertCell().innerText = Number(s.soTien).toLocaleString("vi-VN");
+        });
+    }
+
+    function xoaSoTietKiem() {
+        const maSo = document.getElementById("maSoXoa").value.trim();
+        const thongBao = document.getElementById("thongBao");
+        thongBao.className = "error";
+
+        if (!maSo) {
+            thongBao.innerText = "Vui lòng nhập mã sổ!";
+            return;
+        }
+
+        const viTri = danhSachSo.findIndex(s => s.maSo === maSo);
+        if (viTri === -1) {
+            thongBao.innerText = "Mã sổ không tồn tại!";
+            return;
+        }
+
+        if (confirm("Bạn có chắc muốn xóa sổ này?")) {
+            danhSachSo.splice(viTri, 1);
+            thongBao.innerText = "Đã xóa thành công.";
+            capNhatBangSo();
+        }
+    }
+</script>
+
+</body>
+</html>

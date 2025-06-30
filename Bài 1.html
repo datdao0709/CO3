@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1 - Xử lý mảng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .nhom-nhap {
+            margin: 10px 0;
+        }
+
+        #ketQua {
+            margin-top: 20px;
+            font-weight: bold;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<h2>Nhập và Xử Lý Mảng Số Nguyên</h2>
+
+<div class="nhom-nhap">
+    Nhập số phần tử (n ≤ 50):
+    <input type="number" id="soPhanTu" min="1" max="50" required>
+</div>
+
+<div class="nhom-nhap">
+    Nhập mảng (cách nhau bằng dấu phẩy):
+    <input type="text" id="nhapMang" placeholder="VD: 2, 3, 4, 5, 6" required>
+</div>
+
+<div class="nhom-nhap">
+    <button onclick="xuLyMang()">Xử Lý Mảng</button>
+</div>
+
+<div id="ketQua"></div>
+
+<script>
+    // Hàm kiểm tra số nguyên tố
+    function laSoNguyenTo(n) {
+        if (n < 2) return false;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) return false;
+        }
+        return true;
+    }
+
+    // Hàm chuyển chuỗi thành mảng số nguyên
+    function chuyenChuoiThanhMang(chuoi) {
+        return chuoi
+            .split(',')
+            .map(item => parseInt(item.trim()))
+            .filter(num => !isNaN(num));
+    }
+
+    // Hàm kiểm tra đầu vào hợp lệ
+    function kiemTraDuLieu(n, mang) {
+        if (isNaN(n) || n <= 0 || n > 50) {
+            return "Số phần tử phải là số từ 1 đến 50!";
+        }
+        if (mang.length !== n) {
+            return "Số phần tử trong mảng không khớp với n!";
+        }
+        return null;
+    }
+
+    // Hàm xử lý chính
+    function xuLyMang() {
+        const n = parseInt(document.getElementById('soPhanTu').value);
+        const mangA = chuyenChuoiThanhMang(document.getElementById('nhapMang').value);
+        const Ketqua = document.getElementById('ketQua');
+
+        const loi = kiemTraDuLieu(n, mangA);
+        if (loi) {
+            Ketqua.innerText = loi;
+            return;
+        }
+
+        const mangNguyenTo = mangA.filter(laSoNguyenTo);
+
+        Ketqua.innerText = `Mảng a: [${mangA.join(', ')}]\n`;
+        Ketqua.innerText += `Mảng b (số nguyên tố): [${mangNguyenTo.join(', ')}]`;
+    }
+</script>
+</body>
+</html>
