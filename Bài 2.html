@@ -4,44 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bài 2 - So sánh phân số</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        .input-group {
-            margin: 10px 0;
-        }
-
-        #ketQua {
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-    </style>
 </head>
 <body>
 <h2>So Sánh Hai Phân Số</h2>
 
-<div class="input-group">
+<div>
     Phân số 1:
     <input type="number" id="tu1" value="1" step="1" required> /
     <input type="number" id="mau1" value="2" step="1" required>
 </div>
 
-<div class="input-group">
+<div>
     Phân số 2:
     <input type="number" id="tu2" value="2" step="1" required> /
     <input type="number" id="mau2" value="4" step="1" required>
 </div>
 
-<div class="input-group">
+<div>
     <button onclick="kiemTraPhanSo()">Kiểm Tra</button>
 </div>
-
-<div id="ketQua"></div>
 
 <script>
     // Hàm lấy giá trị và kiểm tra hợp lệ
@@ -76,7 +57,6 @@
             const mau2 = layGiaTri('mau2');
 
             kiemTraMauSo(mau1, mau2);
-
             const ketQua = soSanhPhanSo(tu1, mau1, tu2, mau2);
             divKetQua.innerText = `Kết quả: ${ketQua ? 'Đúng (bằng nhau)' : 'Sai (khác nhau)'}`;
         } catch (err) {
