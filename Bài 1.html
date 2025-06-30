@@ -19,10 +19,12 @@
 </div>
 
 <div>
-    <button onclick="xuLyMang()">Xử Lý Mảng</button>
+    <button onclick="xuLyMang()">Kết quả</button>
 </div>
+
+<div id="ketQua" style="margin-top: 20px; font-weight: bold;"></div>
+
 <script>
-    // Hàm kiểm tra số nguyên tố
     function laSoNguyenTo(n) {
         if (n < 2) return false;
         for (let i = 2; i <= Math.sqrt(n); i++) {
@@ -31,7 +33,6 @@
         return true;
     }
 
-    // Hàm chuyển chuỗi thành mảng số nguyên
     function chuyenChuoiThanhMang(chuoi) {
         return chuoi
             .split(',')
@@ -39,7 +40,6 @@
             .filter(num => !isNaN(num));
     }
 
-    // Hàm kiểm tra đầu vào hợp lệ
     function kiemTraDuLieu(n, mang) {
         if (isNaN(n) || n <= 0 || n > 50) {
             return "Số phần tử phải là số từ 1 đến 50!";
@@ -50,7 +50,6 @@
         return null;
     }
 
-    // Hàm xử lý chính
     function xuLyMang() {
         const n = parseInt(document.getElementById('soPhanTu').value);
         const mangA = chuyenChuoiThanhMang(document.getElementById('nhapMang').value);
